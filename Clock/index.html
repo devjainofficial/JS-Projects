@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+</head>
+<body>
+    <div class="clock-canvas">
+        <span class="heading">What's The Time</span>
+        <div class="clock">
+            <div class="clock-face">
+                <div class="hand hour-hand"></div>
+                <div class="hand min-hand"></div>
+                <div class="hand second-hand"></div>
+            </div>
+            <div id="display"></div>
+            <div class='footer'>
+                <span>Made with ❤️ by Dev</span>
+            </div>
+            <div class='github'>
+            <a href='https://github.com/devjainofficial'><span>@devjainofficial</span></a>
+            </div>
+        </div>
+    </div>
+    <style>
+        html{
+            margin: -3rem 0;
+            padding: 0;
+            background: linear-gradient(to right, #e94d4d,#db3535, #781717, #7b0808);
+            background-size: cover;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        body{
+            font-size: 2rem;
+            display:flex;
+            flex: 1;
+            min-height: 90vh;
+            align-items: center;
+        }
+
+        .clock-canvas{
+            margin: 50px auto;
+            position: relative;
+            display: inline;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .heading{
+            color: #f0f0f0;
+            font-size: 10vh;
+            text-decoration: underline;
+
+        }
+
+        .clock{
+            width: 30rem;
+            height: 30rem;
+            border: 20px solid white;
+            border-radius: 50%;
+            margin: 50px auto;
+            position: relative;
+            padding: 2rem;
+            box-shadow: inset;
+        }
+
+        .clock-face{
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: translateY(-3px); /*Height of the clock hands*/
+        }
+
+        .hand{
+            width: 50%;
+            height: 6px;
+            background: #000;
+            position: absolute;
+            top: 50%;
+            transform-origin: 100%;
+            transform: rotate(90deg);
+            transition: all 0.05s;
+        }
+
+        #display{
+            color: white;
+            margin: 20% 15% 20% 0%;
+            position: relative;
+            font-size: 8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .footer{
+            width: 100%;
+            font-size: 2vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          
+          .github{
+            width: 100%;
+            font-size: 2vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #f0f0f0;
+          }
+    </style>
+
+    <script>
+const secondsHand = document.querySelector('.second-hand');
+const minsHand = document.querySelector('.min-hand');
+const hoursHand = document.querySelector('.hour-hand');
+
+const transitionTxt = 'all 0.05s cubic-bezier(0.075, 0.82, 0.165, 1)';
+
+        function setDate(){
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const secondsDegrees  = ((seconds / 60) * 360) + 90;
+            animateHand(seconds, secondsHand, secondsDegrees);
+
+            const mins = now.getMinutes();
+            const minsDegrees = ((mins / 60) * 360) + 90;
+            animateHand(mins, minsHand, minsDegrees);
+
+            const hours = now.getHours();
+            const hoursDegrees = ((hours / 12) * 360) + 90;
+            animateHand(hours, hoursHand, hoursDegrees);
+
+            function animateHand(time, hand, degree) {
+          
+                if (time === 0) {
+                  hand.style.transition = 'none';
+                } else {
+                  hand.style.transition = transitionTxt;
+                }
+                hand.style.transform = `rotate(${degree}deg)`;
+              }
+
+                document.getElementById("display").innerHTML = (hours + ":" + mins + ":" + seconds);
+        }
+
+        setInterval(setDate, 1000);
+
+        setDate();
+    </script>
+</body>
+</html>
